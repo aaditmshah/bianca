@@ -1,0 +1,32 @@
+{
+    "name": "bianca",
+    "description": "An automated white-box algorithm testing language which compiles down to JSON AST.",
+    "version": "0.1.0-alpha",
+    "keywords": ["bianca", "automated", "white-box", "algorithm", "testing", "language", "json", "ast"],
+    "author": "Aadit M Shah (http://aaditmshah.github.com/) <aaditmshah@myopera.com>",
+    "main": "lib/ast.js",
+    "maintainers": [{
+        "name": "Aadit M Shah",
+        "email": "aaditmshah@myopera.com",
+        "web": "http://aaditmshah.github.com/"
+    }],
+    "contributors": [{
+        "name": "Aadit M Shah",
+        "email": "aaditmshah@myopera.com",
+        "web": "http://aaditmshah.github.com/"
+    }],
+    "bugs": "https://github.com/aaditmshah/bianca/issues",
+    "licenses": [{
+        "type": "GPLv3",
+        "url": "http://www.gnu.org/copyleft/gpl.html"
+    }],
+    "repositories": [{
+        "type": "git",
+        "url": "https://github.com/aaditmshah/bianca.git"
+    }],
+    "dependencies": {
+        "lex": "1.7.3",
+        "jison": "0.3.12"
+    },
+    "homepage": "https://github.com/aaditmshah/binaca"
+}

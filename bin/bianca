@@ -1,0 +1,14 @@
+#!/usr/bin/env node
+
+if (module === require.main)
+    main(process.argv.slice(2));
+
+function main(args) {
+    var fs = require("fs");
+
+    if (args.length) {
+        var code = fs.readFileSync(args[0]);
+        var ast = require("../lib/ast")(code);
+        console.log(JSON.stringify(ast, null, 4));
+    } else console.log("No input file specified.");
+}

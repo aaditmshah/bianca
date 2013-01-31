@@ -1,5 +1,6 @@
 {
     "name": "bianca",
+    "bin": "bin/bianca",
     "preferGlobal": true,
     "description": "An automated interactive white-box algorithm testing language which compiles down to JSON AST.",
     "version": "0.1.0",

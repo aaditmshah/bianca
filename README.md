@@ -12,3 +12,4 @@ The ultrasound scan reveals that the following features are fully developed:
 2. The Parser
 3. The AST Generator
 4. The Semantic Analyzer
+5. The Code Generator

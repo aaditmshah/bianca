@@ -5,10 +5,12 @@ if (module === require.main)
 
 function main(args) {
     var fs = require("fs");
+    var analyzer = require("../lib/analyzer");
 
     if (args.length) {
         var code = fs.readFileSync(args[0]);
-        var ast = require("../lib/ast")(code);
+        var ast = analyzer(code);
+
         console.log(JSON.stringify(ast, null, 4));
     } else console.log("No input file specified.");
 }

@@ -1,16 +1,128 @@
 #!/usr/bin/env node
 
-if (module === require.main)
-    main(process.argv.slice(2));
+if (module === require.main) main(process.argv.slice(2));
 
 function main(args) {
-    var fs = require("fs");
     var analyzer = require("../lib/analyzer");
+    var readline = require("readline");
+    var path = require("path");
+    var fs = require("fs");
 
     if (args.length) {
-        var code = fs.readFileSync(args[0]);
-        var ast = analyzer(code);
+        var filename = args[0];
 
-        console.log(JSON.stringify(ast, null, 4));
+        if (path.extname(filename) === ".bianca") {
+            var code = fs.readFileSync(filename);
+            filename = filename.slice(0, -7);
+            var result = analyzer(code);
+            var program = result[1];
+            var ast = result[0];
+
+            var keys = Object.keys(program);
+            var length = keys.length;
+            var test = {};
+
+            while (length--) test[keys[length]] = [];
+            var testfile = filename + ".test.json";
+
+            if (fs.existsSync(testfile)) {
+                testfile = JSON.parse(fs.readFileSync(testfile));
+                keys = Object.keys(testfile);
+                length = keys.length;
+
+                while (length--) {
+                    var funct = keys[length];
+
+                    if (test[funct]) {
+                        var unit = test[funct] = testfile[funct];
+                        var desc = program[funct];
+                        var result = desc.result;
+                        var params = desc.params;
+                        var paramc = params.length;
+                        var size = unit.length;
+
+                        while (size--) {
+                            var testcase = unit[size];
+                            var expected = testcase.result;
+                            var args = testcase.args;
+                            var argc = args.length;
+
+                            try {
+                                if (argc === paramc) {
+                                    if (compare(evaluate(expected), result)) {
+                                        for (var i = 0; i < paramc; i++)
+                                            if (!compare(evaluate(args[i]), params[i]))
+                                                throw new Error("Argument " + i + " of the function call to `" + funct + "' is invalid.");
+
+                                        var computed = desc.funct.apply(null, args);
+
+                                        if (!equals(computed, expected)) throw new Error("Failed.");
+                                    } else throw new Error("Type mismatch between function and expected result.");
+                                } else throw new Error("The function `" + funct + "' expects " + paramc + " arguments.");
+                            } catch (error) {
+                                console.log("Error in unit `" + funct + "':");
+                                console.log("    " + error.message);
+                                continue;
+                            }
+
+                            console.log("Passed.");
+                        }
+                    }
+                }
+            }
+
+            fs.writeFileSync(filename + ".ast.json", JSON.stringify(ast, null, 4));
+        }
     } else console.log("No input file specified.");
+}
+
+function evaluate(value) {
+    if (typeof value === "number")
+        return { type: "number" };
+
+    var element = evaluate(value[0]);
+    var length = value.length;
+
+    for (var i = 1; i < length; i++)
+        if (!compare(evaluate(value[i]), element))
+            throw new Error("Element " + i + " must be of the same type as the first.");
+
+    var dimensions = [length];
+    if (element.type !== "number") dimensions = dimensions.concat(element.dimensions);
+
+    return {
+        type: "array",
+        dimensions: dimensions
+    };
+}
+
+function compare(test, expected) {
+    var type = test.type;
+    if (type !== expected.type) return false;
+    if (type !== "array") return true;
+
+    test = test.dimensions;
+    expected = expected.dimensions;
+    var length = expected.length;
+
+    if (length) {
+        if (test.length === length) {
+            for (var i = 0; i < length; i++)
+                if (test[i] !== expected[i]) return false;
+        } else return false;
+    }
+
+    return true;
+}
+
+function equals(computed, expected) {
+    if (typeof computed === "number") return computed === expected;
+
+    var length = value.length;
+
+    for (var i = 0; i < length; i++)
+        if (!equals(computed[i], expected[i]))
+            return false;
+
+    return true;
 }

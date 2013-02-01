@@ -60,7 +60,6 @@ function main(args) {
                                     } else throw new Error("Type mismatch between function and expected result.");
                                 } else throw new Error("The function `" + funct + "' expects " + paramc + " arguments.");
                             } catch (error) {
-                                throw error;
                                 console.log("Error in unit `" + funct + "':");
                                 console.log("    " + error.message);
                                 continue;

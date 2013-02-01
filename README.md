@@ -4,7 +4,7 @@ An automated white-box algorithm testing language which compiles down to JSON AS
 
 ## Installation ##
 
-Bianca will help you test all your algorithms. All you need to do is request an appointment with [npm](https://npmjs.org/ "npm"):
+Bianca will help you test all your mathematical algorithms. All you need to do is request an appointment with [npm](https://npmjs.org/ "npm"):
 
 ```bash
 npm install -g bianca
@@ -23,7 +23,7 @@ pythagoras(x, y)
     square(x) + square(y)
 ```
 
-Bianca doesn't allow you to use function before they are declared. This forces programmers to write functions which don't have any cyclic dependencies. This simplifies testing.
+Bianca doesn't allow you to use functions before they are declared. This forces programmers to write functions which don't have any cyclic dependencies. This simplifies testing.
 
 Unlike other languages like Ruby, Python and Perl, Bianca doesn't return the last expression of a function. Instead it returns the first expression of the function. For example:
 
@@ -45,7 +45,7 @@ fact(n)
     n * fact(n - 1)
 ```
 
-Bianca doesn't have any constructs for creating loops. Instead you must create loops using functions. This is beneficial because a functions is the basic testable unit in Bianca. This allows you to test individual parts of the algorithm separately by splitting it into different functions. For example, adding two 3x3 matrices:
+Bianca doesn't have any constructs for creating loops. Instead you must create loops using functions. This is beneficial because functions are the basic testable unit in Bianca. This allows you to test individual parts of the algorithm separately by splitting it into different functions. For example, adding two 3x3 matrices:
 
 ```bianca
 col(a[3][3], b[3][3], i, j)
@@ -74,7 +74,7 @@ The above program verifies the semantic correctness of the program `factorial.bi
 
 ## Unit Testing ##
 
-Just compiling a program is not very useful by itself. What Bianca is really good at is automatic unit testing. You may create a simple JSON test file for your `.bianca` program and when you compile it the compiler will automatically run the unit tests for you notify you about any errors. For example:
+Just compiling a program is not very useful by itself. What Bianca is really good at is automatic unit testing. You may create a simple JSON test file for your `.bianca` program and when you compile it the compiler will automatically run the unit tests for you and notify you about any errors. For example:
 
 ```json
 {

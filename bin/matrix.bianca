@@ -1,0 +1,12 @@
+col(a[3][3], b[3][3], i, j)
+    if (j >= 3) a
+    a[i][j] += b[i][j]
+    col(a, b, i, j + 1)
+
+row(a[3][3], b[3][3], i)
+    if (i >= 3) a
+    a = col(a, b, i, 0)
+    row(a, b, i + 1)
+
+add(a[3][3], b[3][3])
+    row(a, b, 0)

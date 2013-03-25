@@ -1,0 +1,81 @@
+[
+    {
+        "name": "fact",
+        "params": [
+            {
+                "name": "n",
+                "dimensions": []
+            }
+        ],
+        "body": [
+            {
+                "type": "branch",
+                "condition": {
+                    "type": "lesser",
+                    "left": {
+                        "type": "variable",
+                        "name": "n",
+                        "indices": []
+                    },
+                    "right": {
+                        "type": "constant",
+                        "value": 0
+                    }
+                },
+                "pass": [
+                    {
+                        "type": "constant",
+                        "value": 0
+                    }
+                ]
+            },
+            {
+                "type": "branch",
+                "condition": {
+                    "type": "equal",
+                    "left": {
+                        "type": "variable",
+                        "name": "n",
+                        "indices": []
+                    },
+                    "right": {
+                        "type": "constant",
+                        "value": 0
+                    }
+                },
+                "pass": [
+                    {
+                        "type": "constant",
+                        "value": 1
+                    }
+                ]
+            },
+            {
+                "type": "product",
+                "left": {
+                    "type": "variable",
+                    "name": "n",
+                    "indices": []
+                },
+                "right": {
+                    "type": "call",
+                    "name": "fact",
+                    "args": [
+                        {
+                            "type": "difference",
+                            "left": {
+                                "type": "variable",
+                                "name": "n",
+                                "indices": []
+                            },
+                            "right": {
+                                "type": "constant",
+                                "value": 1
+                            }
+                        }
+                    ]
+                }
+            }
+        ]
+    }
+]

@@ -6,7 +6,11 @@ function main(args) {
     var analyzer = require("../lib/analyzer");
     var readline = require("readline");
     var path = require("path");
+    var util = require("util");
     var fs = require("fs");
+    var reset = "\x1B[0m";
+    var red = "\x1B[31;1m";
+    var green = "\x1B[32m";
 
     if (args.length) {
         var filename = args[0];
@@ -29,9 +33,10 @@ function main(args) {
                 testfile = JSON.parse(fs.readFileSync(testfile));
                 keys = Object.keys(testfile);
                 length = keys.length;
+                var unitNumber = 0;
 
                 while (length--) {
-                    var funct = keys[length];
+                    var funct = keys[unitNumber++];
 
                     if (test[funct]) {
                         var unit = test[funct] = testfile[funct];
@@ -40,9 +45,10 @@ function main(args) {
                         var params = desc.params;
                         var paramc = params.length;
                         var size = unit.length;
+                        var testNumber = 0;
 
                         while (size--) {
-                            var testcase = unit[size];
+                            var testcase = unit[testNumber++];
                             var expected = testcase.result;
                             var args = testcase.args;
                             var argc = args.length;
@@ -52,20 +58,20 @@ function main(args) {
                                     if (compare(evaluate(expected), result)) {
                                         for (var i = 0; i < paramc; i++)
                                             if (!compare(evaluate(args[i]), params[i]))
-                                                throw new Error("Argument " + i + " of the function call to `" + funct + "' is invalid.");
+                                                throw new Error("Argument " + i + " is invalid.");
 
                                         var computed = desc.funct.apply(null, args);
 
-                                        if (!equals(computed, expected)) throw new Error("Failed.");
+                                        if (!equals(computed, expected)) throw new Error("Computed: " + util.inspect(computed, {depth: null}) + "\n    Expected: " + util.inspect(expected, {depth: null}));
                                     } else throw new Error("Type mismatch between function and expected result.");
-                                } else throw new Error("The function `" + funct + "' expects " + paramc + " arguments.");
+                                } else throw new Error("Expected " + paramc + " arguments.");
                             } catch (error) {
-                                console.log("Error in unit `" + funct + "':");
-                                console.log("    " + error.message);
+                                console.log(red + "Error in unit `" + funct + "', test #" + testNumber + ":");
+                                console.log("    " + error.message + reset);
                                 continue;
                             }
 
-                            console.log("Passed.");
+                            console.log(green + "Passed test #" + testNumber + " in unit `" + funct + "'." + reset);
                         }
                     }
                 }
@@ -73,7 +79,7 @@ function main(args) {
 
             fs.writeFileSync(filename + ".ast.json", JSON.stringify(ast, null, 4));
         }
-    } else console.log("No input file specified.");
+    } else console.log(red + "No input file specified." + reset);
 }
 
 function evaluate(value) {

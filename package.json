@@ -3,7 +3,7 @@
     "bin": "bin/bianca",
     "preferGlobal": true,
     "description": "An automated interactive white-box algorithm testing language which compiles down to JSON AST.",
-    "version": "0.1.0",
+    "version": "0.2.0",
     "keywords": ["bianca", "automated", "interactive", "white-box", "algorithm", "testing", "language", "json", "ast"],
     "author": "Aadit M Shah (http://aaditmshah.github.com/) <aaditmshah@myopera.com>",
     "main": "lib/ast.js",
@@ -16,6 +16,14 @@
         "name": "Aadit M Shah",
         "email": "aaditmshah@myopera.com",
         "web": "http://aaditmshah.github.com/"
+    },{
+        "name": "Rohan Durve",
+        "email": "decode141@gmail.com",
+        "web": "http://github.com/Decode141"
+    },{
+        "name": "Ryan O'Hara",
+        "email": "minitech.me@gmail.com",
+        "web": "http://github.com/minitech"
     }],
     "bugs": "https://github.com/aaditmshah/bianca/issues",
     "licenses": [{
@@ -30,5 +38,5 @@
         "lex": "1.7.3",
         "jison": "0.3.12"
     },
-    "homepage": "https://github.com/aaditmshah/binaca"
+    "homepage": "https://github.com/aaditmshah/bianca"
 }

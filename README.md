@@ -80,16 +80,16 @@ Just compiling a program is not very useful by itself. What Bianca is really goo
 {
     "fact": [
         {
-            args: [5],
-            result: 120
+            "args": [5],
+            "result": 120
         },
         {
-            args: [0],
-            result: 1
+            "args": [0],
+            "result": 1
         },
         {
-            args: [-10],
-            result: 0
+            "args": [-10],
+            "result": 0
         }
     ]
 }
